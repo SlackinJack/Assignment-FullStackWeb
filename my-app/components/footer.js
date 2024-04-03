@@ -2,11 +2,12 @@ import React from 'react';
 
 function Footer() {
     return (
-        <div>
+        <div className="p-8">
             <ul>
-                <li>Company Information</li>
-                <li>Contact Info</li>
-                <li>etc</li>
+                <li>Good Vibes Inc.</li>
+                <li>203-448-1029</li>
+                <li>Monday - Friday: 8AM - 9PM</li>
+                <li>Saturday - Sunday: Closed</li>
             </ul>
         </div>
     );
