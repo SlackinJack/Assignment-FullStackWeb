@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import GetMovies from './get_movies';
 
 // TODO:
 /*************************************************
@@ -8,12 +9,24 @@ import React, { useState, useEffect } from 'react';
 - Make page length dynamic
 **************************************************/
 
+
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [movieId, setMovieId] = useState(0);
   const [titleValue, setTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
+  
+  // TODO: fix this
+  /* 
+  GetMovies().forEach((movie) => {
+    const newMovie = {
+      id: movies.length + 1,
+      title: movie.title,
+      description: movie.description,
+    };
+  });
+  */
   
   // reset all
   const reset = () => {
