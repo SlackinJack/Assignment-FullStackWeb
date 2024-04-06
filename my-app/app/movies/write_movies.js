@@ -4,7 +4,7 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 
 const uri = "mongodb+srv://Customer:1234@cluster1.iaxk6bg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 
-export default async function GetMovies() {
+export default async function WriteMovies(arrayIn) {
   const client = new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -20,15 +20,11 @@ export default async function GetMovies() {
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     
-    // get movies from db
-    const cursor = client.db.movies.find();
+    // write movies to db
+    const cursor = client.db.movies.insertMany(arrayIn);
     
     // close the connection
     await client.close();
-    
-    // return cursor obj
-    console.log(typeof(cursor));
-    return cursor;
   } catch (error) {
     console.log(error);
   }

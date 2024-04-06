@@ -1,10 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import GetMovies from './get_movies';
+import WriteMovies from './write_movies';
 
 // TODO:
 /*************************************************
-- (!!!) Integrate database
+- Load DB on page load
 - Fix input field being dismissed every keystroke
 - Make page length dynamic
 **************************************************/
@@ -17,16 +18,25 @@ const Movies = () => {
   const [titleValue, setTitleValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
   
-  // TODO: fix this
-  /* 
-  GetMovies().forEach((movie) => {
-    const newMovie = {
-      id: movies.length + 1,
-      title: movie.title,
-      description: movie.description,
-    };
-  });
-  */
+  // init movies with db
+  if (GetMovies != null) {
+    const moviesInDB = Array.from(GetMovies);
+    if (moviesInDB.length > 0) {
+      moviesInDB.forEach((movie) => {
+        const newMovie = {
+          id: movies.length + 1,
+          title: movie.title,
+          description: movie.description,
+        };
+      });
+    }
+  }
+  
+  // upload movie list to db
+  const updateMovies = (moviesIn) => {
+    WriteMovies(moviesIn);
+    setMovies(moviesIn);
+  };
   
   // reset all
   const reset = () => {
@@ -44,22 +54,22 @@ const Movies = () => {
       description: 'Movie Description',
     };
         
-    setMovies([...movies, newMovie]);
+    updateMovies([...movies, newMovie]);
   };
 
   const handleDeleteMovie = (id) => {
     const updatedMovies = movies.filter((movie) => movie.id !== id);
-    setMovies(updatedMovies);
+    updateMovies(updatedMovies);
   };
 
   const handleEditMovie = (id) => {
     movies.forEach((movie) => {
       if (movie.id == id) {
-           setMovieId(id);
-           setTitleValue(movie.title);
-           setDescriptionValue(movie.description);
-           setShowModal(true);
-           return;
+         setMovieId(id);
+         setTitleValue(movie.title);
+         setDescriptionValue(movie.description);
+         setShowModal(true);
+         return;
       }
     });
   };
